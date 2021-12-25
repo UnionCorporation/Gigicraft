@@ -67,10 +67,16 @@ public class ShaderProgram {
     }
 
     public void cleanup() {
-        unbind();
-        if (programId != 0) {
-            glDeleteProgram(programId);
+        if (shaderProgram != null) {
+            shaderProgram.cleanup();
         }
+
+        glDisableVertexAttribArray(0);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glDeleteBuffers(vboId);
+
+        glBindVertexArray(0);
+        glDeletevertexArrays(vaoId);
     }
 }
 
