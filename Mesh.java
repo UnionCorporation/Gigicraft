@@ -24,6 +24,26 @@ public class Mesh {
 
             vboId = glGenBuffers();
             glBindBuffer(GL_ARRAY_BUFFER, vboId);
+            glBufferData(GL_ARRAY_BUFFER, verticesBuffer, GL_STATIC_DRAW);
+            glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, 0);
+            glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+            glBindVertexArray(0);
+        } finally {
+            if (verticesBuffer != null) {
+                MemoryUtil.memFree(verticesBuffer);
+            }
         }
+    }
+
+    public int getVaoId() {
+        return vaoId;
+    }
+    public int getVertexCount() {
+        glDisableVertexAttribArray(0);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glDeleteBuffers(vboId);
+        glBindVertexArray(0);
+        glDeleteVertexArrays(vaoId);
     }
 }
