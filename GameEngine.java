@@ -85,12 +85,22 @@ public class DummyGame implements IGameLogic {
     }
     @Override
     public void render(Window window) {
+        clear();
         if ( window.isResized() ) {
             glViewport(0, 0, window.getWidth(), window.getHeight());
             window.setResized(false);
         }
-        window.setClearColor(color, color, color, 0.0f);
-        renderer.clear();
+
+        ShaderProgram.bind();
+
+        glBindVertexArray(vaoId);
+        glEnableVertexAttribArray(0);
+
+        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glDisableVertexAttribArray(0);
+        glBindVertexArray(0);
+
+        shaderProgram.unbind();
     }
 }
 
